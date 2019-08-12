@@ -28,4 +28,9 @@ public class CoursesController {
     public void addCourse(@RequestBody Course course) {
         repository.addCourse(course);
     }
+
+    @GetMapping("/statistics")
+    public void writeStatistics() throws Exception {
+        repository.writeStatistics();
+    }
 }
