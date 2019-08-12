@@ -26,7 +26,7 @@ public class CoursesController {
         return repository.getCourse(id);
     }
 
-    @GetMapping
+    @GetMapping("/statistics")
     public void getStats() throws Exception {
         repository.writeStatistics();
     }

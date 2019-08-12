@@ -7,17 +7,9 @@ import org.apache.commons.jcs.access.exception.CacheException;
 
 import org.apache.commons.jcs.admin.CacheRegionInfo;
 import org.apache.commons.jcs.admin.JCSAdminBean;
-import org.apache.commons.jcs.engine.control.CompositeCache;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 import ru.inno.stc16.caching.entity.Course;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 @Repository
@@ -29,7 +21,6 @@ public class CourseRepository {
     public CourseRepository() throws CacheException {
     }
 
-    //    @Cacheable(cacheNames = "courses")
     public Course getCourse(int id) throws CacheException {
         Course course = cache.get(id);
         if (course == null) {
@@ -40,19 +31,16 @@ public class CourseRepository {
         return course;
     }
 
-//    @CachePut("courses")
     public void addCourse(Course course) {
         System.out.println("add course to storage");
         courses.put(course.getId(), course);
     }
 
-//    @CachePut("courses")
     public void updateCourse(Course course) {
         System.out.println("update course in storage");
         courses.put(course.getId(), course);
     }
 
-//    @Cacheable(cacheNames = "courses")
     public Collection<Course> getCourses() throws CacheException {
         Set<Integer> ids = courses.keySet();
         Collection<Course> result = new LinkedList<>();
