@@ -1,5 +1,8 @@
 package ru.inno.stc16.caching;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.statistics.StatisticsGateway;
+import net.sf.ehcache.store.StoreOperationOutcomes;
 import org.apache.commons.jcs.access.exception.CacheException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +50,9 @@ public class CourseRepository {
     }
 
     public void writeStatistics() throws Exception {
-        Object cache = cacheManager.getCache("courses").getNativeCache();
+        Cache cache = (Cache)cacheManager.getCache("courses").getNativeCache();
+        StatisticsGateway statistics = cache.getStatistics();
+        System.out.println("HIT: " + statistics.getCore().localHeapGet().value(StoreOperationOutcomes.GetOutcome.HIT));
+        System.out.println("MISS: " + statistics.getCore().localHeapGet().value(StoreOperationOutcomes.GetOutcome.MISS));
     }
 }
